@@ -3,13 +3,14 @@ module Mercadolibre
     attr_accessor :access_token
 
     def initialize(args={})
-      @app_key = args[:app_key]
-      @app_secret = args[:app_secret]
+      @app_key      = args[:app_key]
+      @app_secret   = args[:app_secret]
       @callback_url = args[:callback_url]
-      @site = args[:site]
       @access_token = args[:access_token]
-      @endpoint_url = 'https://api.mercadolibre.com'
-      @auth_url = 'https://auth.mercadolibre.com.ar'
+
+      @site         = args[:site        ] || 'MLA'
+      @endpoint_url = args[:endpoint_url] || "https://api.mercadolibre.com"
+      @auth_url     = args[:auth_url    ] || "http://auth.mercadolibre.com/authorization"
     end
 
     include Mercadolibre::Core::Auth
