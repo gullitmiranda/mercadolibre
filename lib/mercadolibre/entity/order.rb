@@ -4,7 +4,7 @@ module Mercadolibre
       def self.attr_list
         [:id, :status, :date_created, :date_closed, :date_last_updated,
         :hidden_for_seller, :currency_id, :order_items, :total_amount, :buyer, :seller,
-        :payments, :seller_feedback, :buyer_feedback, :shipping_status, :tags]
+        :payments, :seller_feedback, :buyer_feedback, :shipping_status, :shipping, :tags]
       end
 
       attr_reader *attr_list

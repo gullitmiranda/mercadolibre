@@ -86,6 +86,14 @@ module Mercadolibre
         { seller: sale_feedback, buyer: purchase_feedback }
       end
 
+      def get_order_shipping(order_id)
+        filters = { access_token: @access_token }
+
+        result = get_request("/orders/#{order_id}/shipments", filters)
+
+        Mercadolibre::Entity::Shipment.new(result[:body])
+      end
+
       def get_buyer_feedback(order_id)
         result = get_request("/orders/#{order_id}/feedback/purchase?access_token=#{@access_token}")
 
