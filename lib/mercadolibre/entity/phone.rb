@@ -13,6 +13,12 @@ module Mercadolibre
         end
       end
 
+      def to_s
+        phone = [self.area_code, self.number].join.gsub /[^0-9]/, ""
+        phone << "-#{self.extension}" unless self.extension.nil?
+        phone.to_s
+      end
+
       private
 
       attr_writer *attr_list
