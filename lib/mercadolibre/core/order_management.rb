@@ -26,13 +26,18 @@ module Mercadolibre
           pages_remaining = filters[:pages_count] || -1
 
           while (has_results && (pages_remaining != 0)) do
-            partial_results = get_request(orders_url, filters)[:body]['results']
+            response_body = get_request(orders_url, filters)[:body]
 
-            results += partial_results.map { |r| Mercadolibre::Entity::Order.new(r) }
+            if partial_results = response_body['results']
+              results += partial_results.map { |r| Mercadolibre::Entity::Order.new(r) }
 
-            has_results = partial_results.any?
-            filters[:offset] += 50
-            pages_remaining -= 1
+              has_results = partial_results.any?
+              filters[:offset] += 50
+              pages_remaining -= 1
+            else
+              has_results = false
+              results = response_body
+            end
           end
         end
 
