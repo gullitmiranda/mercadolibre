@@ -8,7 +8,7 @@ module Mercadolibre
       @app_key      = args[:app_key]
       @app_secret   = args[:app_secret]
       @callback_url = args[:callback_url]
-      @access_token = args[:access_token] || @credentials.token
+      @access_token = args[:access_token] || @credentials[:token]
 
       @site         = args[:site        ] || 'MLA'
       @endpoint_url = args[:endpoint_url] || "https://api.mercadolibre.com"
