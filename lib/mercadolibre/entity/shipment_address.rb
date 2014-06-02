@@ -47,7 +47,10 @@ module Mercadolibre
           address << self.send(k) if self.respond_to?(k)
         end
         %w(neighborhood city state country zip_code).each do |k, v|
-          address << self.send(k)["name"] if self.respond_to?(k) and !self.send(k)["name"].nil?
+          if self.respond_to?(k)
+            value = self.send(k)
+            address << value["name"] if !value.nil? and value["name"]
+          end
         end
 
         address << "CEP #{self.zip_code}" if self.respond_to?("zip_code") and !self.zip_code.nil?
