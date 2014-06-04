@@ -13,37 +13,38 @@ module Mercadolibre
 
       def authenticate(auth_code)
         response = post_request('/oauth/token', {
-          grant_type: 'authorization_code',
-          client_id: @app_key,
-          client_secret: @app_secret,
-          code: auth_code,
-          redirect_uri: @callback_url
-        })[:body]
+                  grant_type: 'authorization_code',
+                  client_id: @app_key,
+                  client_secret: @app_secret,
+                  code: auth_code,
+                  redirect_uri: @callback_url
+                })[:body]
 
-        @access_token = response['access_token']
+        @credentials = self.credentials= ({
+                  access_token:   response['access_token' ],
+                  refresh_token:  response['refresh_token'],
+                  expired_at:     response['expires_in'   ].to_i.from_now.to_i
+                })
 
-        Mercadolibre::Entity::Auth.new({
-          access_token: @access_token,
-          refresh_token: response['refresh_token'],
-          expired_at: response['expires_in'].to_i.seconds.from_now
-        })
+        Mercadolibre::Entity::Auth.new(@credentials)
       end
 
       def update_token(refresh_token)
         response = post_request('/oauth/token', {
-          grant_type: 'refresh_token',
-          client_id: @app_key,
-          client_secret: @app_secret,
-          refresh_token: refresh_token
-        })[:body]
+                grant_type: 'refresh_token',
+                client_id: @app_key,
+                client_secret: @app_secret,
+                refresh_token: refresh_token
+              })[:body]
 
-        @access_token = response['access_token']
+        @old_credentials  = @credentials
+        @credentials      = self.credentials= ({
+                  access_token:   response['access_token' ],
+                  refresh_token:  response['refresh_token'],
+                  expired_at:     response['expires_in'   ].to_i.from_now.to_i
+                })
 
-        Mercadolibre::Entity::Auth.new({
-          access_token: @access_token,
-          refresh_token: response['refresh_token'],
-          expired_at: response['expires_in'].to_i.seconds.from_now
-        })
+        Mercadolibre::Entity::Auth.new(@credentials)
       end
     end
   end
