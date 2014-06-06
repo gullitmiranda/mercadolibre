@@ -35,7 +35,7 @@ module Mercadolibre
                 client_id: @app_key,
                 client_secret: @app_secret,
                 refresh_token: refresh_token
-              })[:body]
+              }, {}, false)[:body]
 
         @old_credentials  = @credentials
         @credentials      = self.credentials= ({
