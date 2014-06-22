@@ -41,7 +41,7 @@ module Mercadolibre
         @credentials      = self.credentials= ({
                   access_token:   response['access_token' ],
                   refresh_token:  response['refresh_token'],
-                  expired_at:     response['expires_in'   ].to_i.from_now.to_i
+                  expired_at:     response['expires_in'   ].to_i.seconds.since
                 })
 
         Mercadolibre::Entity::Auth.new(@credentials)
