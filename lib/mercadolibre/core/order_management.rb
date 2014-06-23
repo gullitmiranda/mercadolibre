@@ -2,7 +2,7 @@ module Mercadolibre
   module Core
     module OrderManagement
       def get_all_orders(filters={})
-        filters.merge!({
+        filters.reverse_merge!({
           seller: get_my_user.id,
           access_token: @access_token,
           limit: 50
@@ -45,7 +45,7 @@ module Mercadolibre
       end
 
       def get_orders(kind, filters={})
-        filters.merge!({
+        filters.reverse_merge!({
           seller: get_my_user.id,
           access_token: @access_token
         })

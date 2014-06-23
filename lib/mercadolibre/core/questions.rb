@@ -2,7 +2,7 @@ module Mercadolibre
   module Core
     module Questions
       def get_all_questions(filters={})
-        filters.merge!({ access_token: @access_token, limit: 50, offset: 0 })
+        filters.reverse_merge!({ access_token: @access_token, limit: 50, offset: 0 })
 
         if filters[:seller_id]
           action = '/questions/search'
@@ -28,7 +28,7 @@ module Mercadolibre
       end
 
       def get_questions(filters={})
-        filters.merge!({ access_token: @access_token })
+        filters.reverse_merge!({ access_token: @access_token })
 
         if filters[:seller_id]
           url = '/questions/search'

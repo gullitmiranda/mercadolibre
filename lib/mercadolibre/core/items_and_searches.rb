@@ -5,7 +5,7 @@ module Mercadolibre
       def get_all_my_item_ids(filters={})
         user_id = get_my_user.id
 
-        filters.merge!({ access_token: @access_token, limit: 50, offset: 0 })
+        filters.reverse_merge!({ access_token: @access_token, limit: 50, offset: 0 })
 
         results = []
         has_results = true
@@ -26,7 +26,7 @@ module Mercadolibre
       def get_my_item_ids(filters={})
         user_id = get_my_user.id
 
-        filters.merge!({ access_token: @access_token, limit: 50, offset: 0 })
+        filters.reverse_merge!({ access_token: @access_token, limit: 50, offset: 0 })
 
         response = get_request("/users/#{user_id}/items/search", filters)[:body]
 
@@ -38,7 +38,7 @@ module Mercadolibre
 
       # This method is meant to be used when you need to save all data in your local database
       def get_all_item_ids(filters={})
-        filters.merge!({ limit: 50, offset: 0 })
+        filters.reverse_merge!({ limit: 50, offset: 0 })
 
         results = []
         has_results = true
