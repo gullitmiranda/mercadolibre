@@ -14,9 +14,25 @@ module Mercadolibre
       end
 
       def to_s
-        phone = [self.area_code, self.number].join.gsub /[^0-9]/, ""
+        phone = [self.area_code, self.number].map!{ |v| v.gsub(/[^0-9]/, "") }.join
         phone << "-#{self.extension}" unless self.extension.nil?
         phone.to_s
+      end
+
+      def to_hash
+        hash = {}
+
+        self.class.attr_list.map do |k|
+          if self.respond_to?(k)
+            value = self.send(k)
+            value = value.to_hash if value.respond_to? :to_hash
+          else
+            value = nil
+          end
+
+          hash[k] = value unless value.nil?
+        end
+        hash
       end
 
       private

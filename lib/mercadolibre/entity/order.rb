@@ -35,6 +35,23 @@ module Mercadolibre
         self.date_last_updated = date_created if date_last_updated.nil?
       end
 
+      def to_hash
+        hash = {}
+
+        self.class.attr_list.map do |k|
+          if self.respond_to?(k)
+            value = self.send(k)
+            value = value.to_hash if value.respond_to? :to_hash
+          else
+            value = nil
+          end
+
+          hash[k] = value unless value.nil?
+        end
+        hash
+      end
+
+
       private
 
       attr_writer *attr_list
