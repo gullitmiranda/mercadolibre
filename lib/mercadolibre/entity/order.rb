@@ -22,6 +22,7 @@ module Mercadolibre
             end
           elsif k.to_s == 'shipping'
             self.shipping_status = v['status']
+            self.shipping = Shipment.new(v) unless v.nil?
           elsif ['buyer', 'seller'].include?(k.to_s)
             self.send("#{k}=", User.new(v)) unless v.nil?
           elsif ['date_created', 'date_closed', 'date_last_updated'].include?(k.to_s)

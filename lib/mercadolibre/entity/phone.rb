@@ -2,7 +2,7 @@ module Mercadolibre
   module Entity
     class Phone
       def self.attr_list
-        [:area_code, :number, :extension]
+        [:area_code, :number, :extension, :verified]
       end
 
       attr_reader *attr_list

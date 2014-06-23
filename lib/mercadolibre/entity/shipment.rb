@@ -1,10 +1,15 @@
 module Mercadolibre
   module Entity
     class Shipment
+
       def self.attr_list
-        [:id, :status, :status_history, :date_created, :last_updated,
-        :tracking_number, :sender_id, :receiver_id, :sender_address,
-        :receiver_address, :shipping_items, :shipping_option, :comments]
+        # Documentation
+        [ :id, :status, :status_history, :date_created, :last_updated,
+          :tracking_number, :sender_id, :receiver_id, :sender_address,
+          :receiver_address, :shipping_items, :shipping_option, :comments,
+
+          # order response
+          :shipment_type, :date_created, :cost, :currency_id, :service_id, :date_first_printed, :shipping_mode, :substatus]
       end
 
       attr_reader *attr_list
@@ -77,9 +82,9 @@ module Mercadolibre
       def initialize(attributes={})
         attributes.each do |k, v|
           if k.to_s == 'sender_address'
-            self.sender_address = Mercadolibre::Entity::ShipmentAddress.new(v) unless v.nil?
+            self.sender_address = ShipmentAddress.new(v) unless v.nil?
           elsif k.to_s == 'receiver_address'
-            self.receiver_address = Mercadolibre::Entity::ShipmentAddress.new(v) unless v.nil?
+            self.receiver_address = ShipmentAddress.new(v) unless v.nil?
           else
             self.send("#{k}=", v) if self.respond_to?(k)
           end
