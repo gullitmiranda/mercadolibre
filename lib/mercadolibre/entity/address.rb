@@ -1,6 +1,6 @@
 module Mercadolibre
   module Entity
-    class ShipmentAddress
+    class Address
 
       def self.attr_list
         [:id, :address_line, :street_name, :street_number, :comment, :zip_code,

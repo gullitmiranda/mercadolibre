@@ -1,6 +1,7 @@
 require "mercadolibre/version"
 
 # entities
+require "mercadolibre/entity/address"
 require "mercadolibre/entity/answer"
 require "mercadolibre/entity/auth"
 require "mercadolibre/entity/category"
@@ -24,7 +25,6 @@ require "mercadolibre/entity/payment_method"
 require "mercadolibre/entity/phone"
 require "mercadolibre/entity/question"
 require "mercadolibre/entity/shipment"
-require "mercadolibre/entity/shipment_address"
 require "mercadolibre/entity/site"
 require "mercadolibre/entity/site_domain"
 require "mercadolibre/entity/site_trend"

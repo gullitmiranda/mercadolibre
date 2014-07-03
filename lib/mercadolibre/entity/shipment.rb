@@ -82,9 +82,9 @@ module Mercadolibre
       def initialize(attributes={})
         attributes.each do |k, v|
           if k.to_s == 'sender_address'
-            self.sender_address = ShipmentAddress.new(v) unless v.nil?
+            self.sender_address = Address.new(v) unless v.nil?
           elsif k.to_s == 'receiver_address'
-            self.receiver_address = ShipmentAddress.new(v) unless v.nil?
+            self.receiver_address = Address.new(v) unless v.nil?
           else
             self.send("#{k}=", v) if self.respond_to?(k)
           end
