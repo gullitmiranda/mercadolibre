@@ -31,7 +31,7 @@ module Mercadolibre
             if partial_results = response_body['results']
               results += partial_results.map { |r| Mercadolibre::Entity::Order.new(r) }
 
-              has_results = partial_results.any?
+              has_results = (partial_results.any? and partial_results.count == filters[:limit])
               filters[:offset] += 50
               pages_remaining -= 1
             else

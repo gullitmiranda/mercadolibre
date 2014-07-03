@@ -15,7 +15,8 @@ module Mercadolibre
         while (has_results && (pages_remaining != 0)) do
           partial_results = get_request("/users/#{user_id}/items/search", filters)[:body]['results']
           results += partial_results
-          has_results = partial_results.any?
+
+          has_results = (partial_results.any? and partial_results.count == filters[:limit])
           filters[:offset] += 50
           pages_remaining -= 1
         end
@@ -48,7 +49,8 @@ module Mercadolibre
         while (has_results && (pages_remaining != 0)) do
           partial_results = get_request("/sites/#{@site}/search", filters)[:body]['results']
           results += partial_results.map { |r| r['id'] }
-          has_results = partial_results.any?
+
+          has_results = (partial_results.any? and partial_results.count == filters[:limit])
           filters[:offset] += 50
           pages_remaining -= 1
         end

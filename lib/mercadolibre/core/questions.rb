@@ -19,7 +19,7 @@ module Mercadolibre
 
           results += partial_results.map { |q| Mercadolibre::Entity::Question.new(q) }
 
-          has_results = partial_results.any?
+          has_results = (partial_results.any? and partial_results.count == filters[:limit])
           filters[:offset] += 50
           pages_remaining -= 1
         end

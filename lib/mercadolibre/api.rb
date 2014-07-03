@@ -106,11 +106,12 @@ module Mercadolibre
 
     # Token
     def token_expired?
+      Rails.logger.debug " ::ML::::::::: token_expired? => #{credentials[:token_expires_at].to_i} < #{Time.now.to_i} = #{credentials[:token_expires_at].to_i < Time.now.to_i}"
       credentials[:token_expires_at] and (credentials[:token_expires_at].to_i < Time.now.to_i)
     end
 
     def update_token!
-      Rails.logger.debug " ::ML::::::::: update_token! "
+      Rails.logger.debug " ::ML::::::::: update_token! => #{credentials}"
       update_token credentials[:refresh_token]
     end
 
