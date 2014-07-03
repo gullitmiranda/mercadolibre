@@ -1,9 +1,21 @@
 module Mercadolibre
   module Core
     module ItemsAndSearches
+      def get_all_my_items(filters={})
+        items_ids = get_all_my_item_ids filters
+
+        items = []
+        items_ids.map do |item_id|
+          items << get_item(item_id)
+        end
+        items
+      end
+
       # This method is meant to be used when you need to save all data in your local database
       def get_all_my_item_ids(filters={})
-        user_id = get_my_user.id
+        user_id = filters[:user_id] || get_my_user.id
+
+        filters.delete(:user_id)
 
         filters.reverse_merge!({ access_token: @access_token, limit: 50, offset: 0 })
 
@@ -25,7 +37,9 @@ module Mercadolibre
       end
 
       def get_my_item_ids(filters={})
-        user_id = get_my_user.id
+        user_id = filters[:user_id] || get_my_user.id
+
+        filters.delete(:user_id)
 
         filters.reverse_merge!({ access_token: @access_token, limit: 50, offset: 0 })
 

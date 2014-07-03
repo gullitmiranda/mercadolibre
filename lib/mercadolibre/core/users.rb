@@ -2,6 +2,10 @@ module Mercadolibre
   module Core
     module Users
       def get_my_user
+        @user ||= get_my_user_request
+      end
+
+      def get_my_user_request
         result = get_request('/users/me', { access_token: @access_token })
 
         Mercadolibre::Entity::User.new(result[:body])
