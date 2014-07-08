@@ -3,7 +3,7 @@ module Mercadolibre
     attr_accessor :access_token
 
     def initialize(args={})
-      @credentials  = args[:credentials]
+      @credentials  = self.class.normalize_credentials(args[:credentials])
 
       @app_key      = args[:app_key]
       @app_secret   = args[:app_secret]
@@ -38,7 +38,14 @@ module Mercadolibre
 
     def credentials=(credentials)
       access_token= credentials[:access_token]
-      @credentials = credentials
+      @credentials = normalize_credentials credentials
+    end
+
+    class << self
+      def normalize_credentials(credentials)
+        credentials[:token_expires_at] = Time.parse(credentials[:token_expires_at]) if credentials[:token_expires_at].kind_of? String
+        credentials
+      end
     end
 
 
@@ -106,8 +113,8 @@ module Mercadolibre
 
     # Token
     def token_expired?
-      Rails.logger.debug " ::ML::::::::: token_expired? => #{credentials[:token_expires_at].to_i} < #{Time.now.to_i} = #{credentials[:token_expires_at].to_i < Time.now.to_i}"
-      credentials[:token_expires_at] and (credentials[:token_expires_at].to_i < Time.now.to_i)
+      Rails.logger.debug " ::ML::::::::: token_expired? => #{credentials[:token_expires_at].to_i} < #{Time.current.to_i} = #{credentials[:token_expires_at].to_i < Time.current.to_i}"
+      credentials[:token_expires_at] and (credentials[:token_expires_at].to_i < Time.current.to_i)
     end
 
     def update_token!
