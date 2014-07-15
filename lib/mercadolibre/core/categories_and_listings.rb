@@ -51,6 +51,18 @@ module Mercadolibre
 
         Mercadolibre::Entity::Category.new(result[:body])
       end
+
+      def get_categories_suggest(filters)
+        filters.reverse_merge!({
+          seller: @site,
+          sellType: "list"
+        })
+        results = get_request_without_endpoint("http://syi.mercadolivre.com.br/category/suggest", filters)[:body]
+
+        if results.kind_of? Hash
+          results["suggestedCategories"]#.map { |r| Mercadolibre::Entity::Category.new(r) }
+        end
+      end
     end
   end
 end

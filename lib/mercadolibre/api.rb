@@ -54,6 +54,14 @@ module Mercadolibre
       end
     end
 
+    def get_request_without_endpoint(action, params={}, headers={})
+      begin
+        parse_response(RestClient.get("#{action}?#{params.to_param}", headers))
+      rescue => e
+        parse_response(e.response)
+      end
+    end
+
     def post_request(action, params={}, headers={}, check_expired=true)
       check_expired and token_expired? and update_token!
 
