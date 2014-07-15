@@ -3,7 +3,7 @@ module Mercadolibre
     attr_accessor :access_token
 
     def initialize(args={})
-      @credentials  = self.class.normalize_credentials(args[:credentials])
+      @credentials  = args[:credentials]
 
       @app_key      = args[:app_key]
       @app_secret   = args[:app_secret]
@@ -38,14 +38,7 @@ module Mercadolibre
 
     def credentials=(credentials)
       access_token= credentials[:access_token]
-      @credentials = normalize_credentials credentials
-    end
-
-    class << self
-      def normalize_credentials(credentials)
-        credentials[:token_expires_at] = Time.parse(credentials[:token_expires_at]) if credentials[:token_expires_at].kind_of? String
-        credentials
-      end
+      @credentials = credentials
     end
 
 
