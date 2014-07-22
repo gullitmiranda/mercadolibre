@@ -30,6 +30,15 @@ module Mercadolibre
       end
 
       def update_token(refresh_token)
+        params = {
+          grant_type: 'refresh_token',
+          client_id: @app_key,
+          client_secret: @app_secret,
+          refresh_token: refresh_token
+        }
+
+        Rails.logger.debug " ::ML::::::::: update_token => #{params}"
+
         response = post_request('/oauth/token', {
                 grant_type: 'refresh_token',
                 client_id: @app_key,
@@ -41,7 +50,7 @@ module Mercadolibre
         @credentials      = self.credentials= ({
                   access_token:   response['access_token' ],
                   refresh_token:  response['refresh_token'],
-                  expired_at:     response['expires_in'   ].to_i.seconds.since
+                  expired_at:     response['expires_in'   ].to_i
                 })
 
         Mercadolibre::Entity::Auth.new(@credentials)

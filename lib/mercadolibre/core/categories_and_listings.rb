@@ -40,8 +40,8 @@ module Mercadolibre
         results[:body].map { |r| Mercadolibre::Entity::ListingPrice.new(r) }
       end
 
-      def get_site_categories(site_id)
-        results = get_request("/sites/#{site_id}/categories")
+      def get_site_categories(site_id=nil)
+        results = get_request("/sites/#{site_id || @site}/categories")
 
         results[:body].map { |r| Mercadolibre::Entity::Category.new(r) }
       end
