@@ -46,6 +46,7 @@ module Mercadolibre
 
     def get_request(action, params={}, headers={})
       token_expired? and update_token!
+      Rails.logger.debug " ::ML::::::::: get_request: #{@endpoint_url}#{action}\n  params: #{{params: params}.merge(headers)} "
 
       begin
         parse_response(RestClient.get("#{@endpoint_url}#{action}", {params: params}.merge(headers)))

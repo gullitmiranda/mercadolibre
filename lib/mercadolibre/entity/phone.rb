@@ -14,7 +14,7 @@ module Mercadolibre
       end
 
       def to_s
-        phone = [self.area_code, self.number].map!{ |v| v.gsub(/[^0-9]/, "") }.join
+        phone = [self.area_code, self.number].map!{ |v| v && v.gsub(/[^0-9]/, "") }.join
         phone << "-#{self.extension}" unless self.extension.nil?
         phone.to_s
       end

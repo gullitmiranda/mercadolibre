@@ -10,7 +10,9 @@ module Mercadolibre
 
         results = []
 
+        Rails.logger.debug " ::ML::::::::: get_all_orders: filters: #{filters}\n "
         kind = filters.delete(:kind)
+        Rails.logger.debug " ::ML::::::::: get_all_orders: kind: #{kind.to_s}\n !!#{kind.to_s == 'recent'}\n "
 
         if kind.to_s == 'recent'
           orders_urls = ['/orders/search/recent']
